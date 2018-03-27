@@ -10,14 +10,15 @@
 #include "comm_port_serial.h"
 #include "comm_port_timer.h"
 #include "scale_func_task.h"
-#include "lock_task.h"
-#include "door_task.h"
+#include "lock_ctrl_task.h"
+#include "lock_status_task.h"
+#include "door_status_task.h"
 #include "compressor_task.h"
 #include "temperature_task.h"
-#include "dc_task.h"
-#include "light_task.h"
+#include "dc_ctrl_task.h"
+#include "light_ctrl_task.h"
 #include "glass_pwr_task.h"
-#include "ups_task.h"
+#include "ups_status_task.h"
 #include "debug_task.h"
 #include "cpu_utils.h"
 
@@ -430,7 +431,7 @@ err_handle2:
  } 
  /*向灯带任务发送打开信号*/
  APP_LOG_DEBUG("向灯带任务发送打开信号.\r\n");
- osSignalSet(light_task_hdl,LIGHT_TASK_DEBUG_LIGHT_TURN_ON_SIGNAL);
+ osSignalSet(light_ctrl_task_hdl,LIGHT_CTRL_TASK_DEBUG_LIGHT_TURN_ON_SIGNAL);
  continue;
  }
  /*关闭所有灯带*/
@@ -444,7 +445,7 @@ err_handle2:
  } 
  /*向灯带任务发送关闭信号*/
  APP_LOG_DEBUG("向灯带任务发送关闭信号.\r\n");
- osSignalSet(light_task_hdl,LIGHT_TASK_DEBUG_LIGHT_TURN_OFF_SIGNAL);
+ osSignalSet(light_ctrl_task_hdl,LIGHT_CTRL_TASK_DEBUG_LIGHT_TURN_OFF_SIGNAL);
  continue;
  } 
  
@@ -459,7 +460,7 @@ err_handle2:
  } 
  /*向DC任务发送打开信号*/
  APP_LOG_DEBUG("向DC任务发送打开信号.\r\n");
- osSignalSet(dc_task_hdl,DC_TASK_12V_PWR_ON_SIGNAL|DC_TASK_24V_PWR_ON_SIGNAL);
+ osSignalSet(dc_ctrl_task_hdl,DC_CTRL_TASK_12V_PWR_ON_SIGNAL|DC_CTRL_TASK_24V_PWR_ON_SIGNAL);
  continue;
  } 
  /*关闭所有DC*/
@@ -473,7 +474,7 @@ err_handle2:
  } 
  /*向DC任务发送关闭信号*/
  APP_LOG_DEBUG("向12V任务发送关闭信号.\r\n");
- osSignalSet(dc_task_hdl,DC_TASK_12V_PWR_OFF_SIGNAL|DC_TASK_24V_PWR_OFF_SIGNAL);
+ osSignalSet(dc_ctrl_task_hdl,DC_CTRL_TASK_12V_PWR_OFF_SIGNAL|DC_CTRL_TASK_24V_PWR_OFF_SIGNAL);
  continue;
  } 
  /*打开玻璃电源*/
@@ -516,8 +517,8 @@ err_handle2:
  } 
  /*获取UPS状态*/
  uint8_t status;
- status=ups_task_get_ups_status();
- if(status==UPS_TASK_STATUS_PWR_ON)
+ status=ups_status_task_get_ups_status();
+ if(status==UPS_STATUS_TASK_STATUS_PWR_ON)
  {
   APP_LOG_DEBUG("UPS状态--接通市电.\r\n");
  }
@@ -658,7 +659,7 @@ err_handle2:
   APP_LOG_ERROR("开锁命令长度非法.\r\n");
   continue;
  }
- osSignalSet(lock_task_hdl,LOCK_TASK_DEBUG_UNLOCK_SIGNAL);
+ osSignalSet(lock_ctrl_task_hdl,LOCK_CTRL_TASK_DEBUG_UNLOCK_SIGNAL);
  continue;
  }
  /*关锁*/
@@ -670,7 +671,7 @@ err_handle2:
   APP_LOG_ERROR("关锁命令长度非法.\r\n");
   continue;
  }
- osSignalSet(lock_task_hdl,LOCK_TASK_DEBUG_UNLOCK_SIGNAL);
+ osSignalSet(lock_ctrl_task_hdl,LOCK_CTRL_TASK_DEBUG_UNLOCK_SIGNAL);
  continue;
  }
  /*打开门指示灯*/

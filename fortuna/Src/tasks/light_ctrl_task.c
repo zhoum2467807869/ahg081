@@ -3,19 +3,19 @@
 #include "cmsis_os.h"
 #include "app_common.h"
 #include "ABDK_AHG081_ZK.h"
-#include "light_task.h"
+#include "light_ctrl_task.h"
 
-#define APP_LOG_MODULE_NAME   "[light]"
+#define APP_LOG_MODULE_NAME   "[light_ctrl]"
 #define APP_LOG_MODULE_LEVEL   APP_LOG_LEVEL_DEBUG    
 #include "app_log.h"
 #include "app_error.h"
 
-osThreadId light_task_hdl;
-app_bool_t is_light_turn_on_enable=APP_TRUE;
+osThreadId light_ctrl_task_hdl;
+app_bool_t is_light_turn_on_enable_ups=APP_TRUE;
 
 static void light_task_light_turn_on()
 {
- if(is_light_turn_on_enable==APP_TRUE)
+ if(is_light_turn_on_enable_ups==APP_TRUE)
  {
   APP_LOG_DEBUG("打开灯条.\r\n");
   BSP_LIGHT_TURN_ON_OFF(LIGHT_CTL_ON);
@@ -44,7 +44,7 @@ static void light_task_debug_light_turn_off()
 
 
 
-void light_task(void const * argument)
+void light_ctrl_task(void const * argument)
 {
  osEvent signal;
  APP_LOG_INFO("@灯条任务开始.\r\n");
@@ -53,37 +53,37 @@ void light_task(void const * argument)
  
  while(1)
  {
- signal=osSignalWait(LIGHT_TASK_ALL_SIGNALS,LIGHT_TASK_INTERVAL);
+ signal=osSignalWait(LIGHT_CTRL_TASK_ALL_SIGNALS,LIGHT_CTRL_TASK_INTERVAL);
  if(signal.status==osEventSignal)
  {
- if(signal.value.signals & LIGHT_TASK_LIGHT_TURN_ON_SIGNAL)
+ if(signal.value.signals & LIGHT_CTRL_TASK_LIGHT_TURN_ON_SIGNAL)
  { 
-   if(is_light_turn_on_enable==APP_TRUE)
+   if(is_light_turn_on_enable_ups==APP_TRUE)
    light_task_light_turn_on();
  }
- if(signal.value.signals & LIGHT_TASK_LIGHT_TURN_OFF_SIGNAL)
+ if(signal.value.signals & LIGHT_CTRL_TASK_LIGHT_TURN_OFF_SIGNAL)
  {
   light_task_light_turn_off();
  }
- if(signal.value.signals & LIGHT_TASK_DEBUG_LIGHT_TURN_ON_SIGNAL)
+ if(signal.value.signals & LIGHT_CTRL_TASK_DEBUG_LIGHT_TURN_ON_SIGNAL)
  {
   light_task_debug_light_turn_on();
  }
- if(signal.value.signals & LIGHT_TASK_DEBUG_LIGHT_TURN_OFF_SIGNAL)
+ if(signal.value.signals & LIGHT_CTRL_TASK_DEBUG_LIGHT_TURN_OFF_SIGNAL)
  {
   light_task_debug_light_turn_off();
  }
  /*根据UPS状态设置灯光可控使能*/
- if(signal.value.signals & LIGHT_TASK_UPS_PWR_ON_SIGNAL)
+ if(signal.value.signals & LIGHT_CTRL_TASK_UPS_PWR_ON_SIGNAL)
  {
   APP_LOG_DEBUG("LIGHT任务收到UPS变化.\r\n");
-  is_light_turn_on_enable=APP_TRUE;
+  is_light_turn_on_enable_ups=APP_TRUE;
   light_task_light_turn_on();
  }
- if(signal.value.signals & LIGHT_TASK_UPS_PWR_OFF_SIGNAL)
+ if(signal.value.signals & LIGHT_CTRL_TASK_UPS_PWR_OFF_SIGNAL)
  {
   APP_LOG_DEBUG("LIGHT任务收到UPS变化.\r\n");
-  is_light_turn_on_enable=APP_FALSE;
+  is_light_turn_on_enable_ups=APP_FALSE;
   light_task_light_turn_off();
  }
  

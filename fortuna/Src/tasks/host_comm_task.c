@@ -9,7 +9,7 @@
 #include "scale_comm_task.h"
 #include "scale_func_task.h"
 #include "scale_poll_task.h"
-#include "lock_task.h"
+#include "lock_ctrl_task.h"
 #define APP_LOG_MODULE_NAME   "[host_comm]"
 #define APP_LOG_MODULE_LEVEL   APP_LOG_LEVEL_INFO    
 #include "app_log.h"

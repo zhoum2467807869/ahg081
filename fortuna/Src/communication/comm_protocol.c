@@ -10,9 +10,9 @@
 #include "comm_port_serial.h"
 #include "comm_port_timer.h"
 #include "scale_func_task.h"
-#include "lock_task.h"
-#include "door_task.h"
-#include "ups_task.h"
+#include "lock_ctrl_task.h"
+#include "door_status_task.h"
+#include "ups_status_task.h"
 #include "temperature_task.h"
 #define APP_LOG_MODULE_NAME   "[protocol]"
 #define APP_LOG_MODULE_LEVEL   APP_LOG_LEVEL_ERROR    
@@ -445,11 +445,13 @@ static comm_status_t comm_cmd21_process(uint8_t *ptr_param,uint8_t param_len,uin
    APP_LOG_ERROR("命令0x21参数长度%d不匹配.\r\n",param_len);
    return COMM_ERR;
   }
-  osSignalSet(lock_task_hdl,LOCK_TASK_LOCK_SIGNAL);
+  /*清除遗留无用的信号*/
+  osSignalWait(HOST_COMM_TASK_ALL_SIGNALS,0);
+  osSignalSet(lock_ctrl_task_hdl,LOCK_CTRL_TASK_LOCK_SIGNAL);
   /*等待处理返回*/
   APP_LOG_DEBUG("等待锁任务返回结果...\r\n");
-  signal=osSignalWait(COMM_TASK_UNLOCK_LOCK_SUCCESS_SIGNAL|COMM_TASK_UNLOCK_LOCK_FAIL_SIGNAL,COMM_TASK_UNLOCK_LOCK_TIMEOUT);
-  if(signal.status==osEventSignal && (signal.value.signals & COMM_TASK_UNLOCK_LOCK_SUCCESS_SIGNAL))
+  signal=osSignalWait(HOST_COMM_TASK_UNLOCK_LOCK_SUCCESS_SIGNAL|HOST_COMM_TASK_UNLOCK_LOCK_FAIL_SIGNAL,COMM_UNLOCK_LOCK_TIMEOUT);
+  if(signal.status==osEventSignal && (signal.value.signals & HOST_COMM_TASK_UNLOCK_LOCK_SUCCESS_SIGNAL))
   {
    /*回填操作结果*/
    ptr_param[0]=COMM_CMD21_EXECUTE_RESULT_SUCCESS;
@@ -479,13 +481,15 @@ static comm_status_t comm_cmd22_process(uint8_t *ptr_param,uint8_t param_len,uin
    APP_LOG_ERROR("命令0x22参数长度%d不匹配.\r\n",param_len);
    return COMM_ERR;
   }
+  /*清除遗留无用的信号*/
+  osSignalWait(HOST_COMM_TASK_ALL_SIGNALS,0);
   /*向锁任务发送关锁消息*/
   APP_LOG_DEBUG("向锁任务发送关锁消息.\r\n");
-  osSignalSet(lock_task_hdl,LOCK_TASK_UNLOCK_SIGNAL);
+  osSignalSet(lock_ctrl_task_hdl,LOCK_CTRL_TASK_UNLOCK_SIGNAL);
   /*等待处理返回*/
   APP_LOG_DEBUG("等待锁任务返回结果...\r\n");
-  signal=osSignalWait(COMM_TASK_LOCK_LOCK_SUCCESS_SIGNAL|COMM_TASK_LOCK_LOCK_SUCCESS_SIGNAL,COMM_TASK_LOCK_LOCK_TIMEOUT);
-  if(signal.status==osEventSignal && (signal.value.signals & COMM_TASK_LOCK_LOCK_SUCCESS_SIGNAL))
+  signal=osSignalWait(HOST_COMM_TASK_LOCK_LOCK_SUCCESS_SIGNAL|HOST_COMM_TASK_LOCK_LOCK_SUCCESS_SIGNAL,COMM_LOCK_LOCK_TIMEOUT);
+  if(signal.status==osEventSignal && (signal.value.signals & HOST_COMM_TASK_LOCK_LOCK_SUCCESS_SIGNAL))
   {
    /*回填操作结果*/
    ptr_param[0]=COMM_CMD22_EXECUTE_RESULT_SUCCESS; 
@@ -542,7 +546,7 @@ static comm_status_t comm_cmd31_process(uint8_t *ptr_param,uint8_t param_len,uin
    APP_LOG_ERROR("命令0x31参数长度%d不匹配.\r\n",param_len);
    return COMM_ERR;
  }
- if(ups_task_get_ups_status()==UPS_TASK_STATUS_PWR_ON)
+ if(ups_status_task_get_ups_status()==UPS_STATUS_TASK_STATUS_PWR_ON)
  {
   status=UPS_PWR_ON;
  }

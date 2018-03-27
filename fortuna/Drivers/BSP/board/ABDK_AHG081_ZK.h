@@ -36,6 +36,11 @@ typedef enum
  /*UPS*/
  UPS_PWR_STATUS_ON=GPIO_PIN_SET,/*UPS连接了主电源*/
  UPS_PWR_STATUS_OFF=GPIO_PIN_RESET,/*UPS断开了主电源*/
+ /*吸住门的电磁锁*/
+ DOOR_CTL_LOCK=GPIO_PIN_SET,
+ DOOR_CTL_UNLOCK=GPIO_PIN_RESET,
+ DOOR_STATUS_UNLOCK=GPIO_PIN_SET,
+ DOOR_STATUS_LOCK=GPIO_PIN_RESET,
  /*锁*/
  LOCK_CTL_UNLOCK=GPIO_PIN_SET,
  LOCK_CTL_LOCK=GPIO_PIN_RESET,
@@ -113,8 +118,10 @@ void BSP_RS485_RX_ENABLE();
 void BSP_RS485_TX_ENABLE();
 /*交流电控制*/
 void BSP_AC_TURN_ON_OFF(uint8_t ac,bsp_status_t status);
-/*锁控制*/
+/*电插锁控制*/
 void BSP_LOCK_CTL(bsp_status_t status);
+/*电磁锁操作*/
+void BSP_DOOR_CTL(bsp_status_t status);
 /*玻璃加热电源控制*/
 void BSP_GLASS_PWR_TURN_ON_OFF(bsp_status_t status);
 /*灯带控制*/

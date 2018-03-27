@@ -53,13 +53,13 @@ void scale_func_task(void const * argument)
    {
    APP_LOG_DEBUG("电子秤清零成功.\r\n");
    APP_LOG_DEBUG("向通信任务发送清零成功信号.\r\n");
-   osSignalSet(host_comm_task_hdl,COMM_TASK_CLEAR_ZERO_OK_SIGNAL);  
+   osSignalSet(host_comm_task_hdl,HOST_COMM_TASK_CLEAR_ZERO_OK_SIGNAL);  
    }
    else
    {
    APP_LOG_DEBUG("电子秤清零失败.\r\n");
    APP_LOG_DEBUG("向通信任务发送清零失败信号.\r\n");
-   osSignalSet(host_comm_task_hdl,COMM_TASK_CLEAR_ZERO_ERR_SIGNAL);  
+   osSignalSet(host_comm_task_hdl,HOST_COMM_TASK_CLEAR_ZERO_ERR_SIGNAL);  
    }
  case  SCALE_FUNC_TASK_CLEAR_TARE_WEIGHT_MSG:
     APP_LOG_DEBUG("收到去皮指令消息.\r\n");
@@ -72,13 +72,13 @@ void scale_func_task(void const * argument)
    {
    APP_LOG_DEBUG("电子秤去皮成功.\r\n");
    APP_LOG_DEBUG("向通信任务发送去皮成功信号.\r\n");
-   osSignalSet(host_comm_task_hdl,COMM_TASK_CLEAR_SCALE_TARE_WEIGHT_OK_SIGNAL);
+   osSignalSet(host_comm_task_hdl,HOST_COMM_TASK_CLEAR_SCALE_TARE_WEIGHT_OK_SIGNAL);
    }
    else
    {
    APP_LOG_DEBUG("电子秤去皮失败.\r\n");
    APP_LOG_DEBUG("向通信任务发送去皮失败信号.\r\n");
-   osSignalSet(host_comm_task_hdl,COMM_TASK_CLEAR_SCALE_TARE_WEIGHT_ERR_SIGNAL);
+   osSignalSet(host_comm_task_hdl,HOST_COMM_TASK_CLEAR_SCALE_TARE_WEIGHT_ERR_SIGNAL);
    }
    break;
  case  SCALE_FUNC_TASK_CALIBRATE_CODE_MSG:
@@ -89,13 +89,13 @@ void scale_func_task(void const * argument)
    {
    APP_LOG_DEBUG("电子秤标定内码成功.\r\n");
    APP_LOG_DEBUG("向通信任务发送标定内码成功信号.\r\n");
-   osSignalSet(host_comm_task_hdl,COMM_TASK_CALIBRATE_SCALE_CODE_OK_SIGNAL);
+   osSignalSet(host_comm_task_hdl,HOST_COMM_TASK_CALIBRATE_SCALE_CODE_OK_SIGNAL);
    }
    else
    {
    APP_LOG_DEBUG("电子称标定内码失败.\r\n");
    APP_LOG_DEBUG("向通信任务发送标定内码失败信号.\r\n");
-   osSignalSet(host_comm_task_hdl,COMM_TASK_CALIBRATE_SCALE_CODE_ERR_SIGNAL);
+   osSignalSet(host_comm_task_hdl,HOST_COMM_TASK_CALIBRATE_SCALE_CODE_ERR_SIGNAL);
    }
    break;
   
@@ -107,13 +107,13 @@ void scale_func_task(void const * argument)
    {
    APP_LOG_DEBUG("电子秤标定测量值成功.\r\n");
    APP_LOG_DEBUG("向通信任务发送标定测量值成功信号.\r\n");
-   osSignalSet(host_comm_task_hdl,COMM_TASK_CALIBRATE_SCALE_MEASUREMENT_OK_SIGNAL);
+   osSignalSet(host_comm_task_hdl,HOST_COMM_TASK_CALIBRATE_SCALE_MEASUREMENT_OK_SIGNAL);
    }
    else
    {
    APP_LOG_DEBUG("电子称标定测量值失败.\r\n");
    APP_LOG_DEBUG("向通信任务发送标定测量值失败信号.\r\n");
-   osSignalSet(host_comm_task_hdl,COMM_TASK_CALIBRATE_SCALE_MEASUREMENT_ERR_SIGNAL);
+   osSignalSet(host_comm_task_hdl,HOST_COMM_TASK_CALIBRATE_SCALE_MEASUREMENT_ERR_SIGNAL);
    }
    break;
    case  SCALE_FUNC_TASK_CALIBRATE_WEIGHT_MSG:
@@ -124,13 +124,13 @@ void scale_func_task(void const * argument)
    {
    APP_LOG_DEBUG("电子秤标定重量成功.\r\n");
    APP_LOG_DEBUG("向通信任务发送标定重量成功信号.\r\n");
-   osSignalSet(host_comm_task_hdl,COMM_TASK_CALIBRATE_SCALE_WEIGHT_OK_SIGNAL);
+   osSignalSet(host_comm_task_hdl,HOST_COMM_TASK_CALIBRATE_SCALE_WEIGHT_OK_SIGNAL);
    }
    else
    {
    APP_LOG_DEBUG("电子称标定重量失败.\r\n");
    APP_LOG_DEBUG("向通信任务发送标定重量失败信号.\r\n");
-   osSignalSet(host_comm_task_hdl,COMM_TASK_CALIBRATE_SCALE_WEIGHT_ERR_SIGNAL);
+   osSignalSet(host_comm_task_hdl,HOST_COMM_TASK_CALIBRATE_SCALE_WEIGHT_ERR_SIGNAL);
    }
    break;
   

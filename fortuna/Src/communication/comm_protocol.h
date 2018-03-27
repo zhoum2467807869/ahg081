@@ -42,31 +42,15 @@ comm_status_t comm_send_fsm(uint8_t *ptr_buff,uint8_t send_len);
 #define  COMM_SERIAL_PDU_SIZE_MIN                          2
 #define  COMM_PDU_SIZE_MIN                                 1
 
-/*通信任务子函数信号*/
-#define  COMM_TASK_CLEAR_SCALE_TARE_WEIGHT_OK_SIGNAL       (1<<5)
-#define  COMM_TASK_CLEAR_SCALE_TARE_WEIGHT_ERR_SIGNAL      (1<<6)
-#define  COMM_TASK_CLEAR_ZERO_OK_SIGNAL                    (1<<7)
-#define  COMM_TASK_CLEAR_ZERO_ERR_SIGNAL                   (1<<8)
-#define  COMM_TASK_CALIBRATE_SCALE_CODE_OK_SIGNAL          (1<<9)
-#define  COMM_TASK_CALIBRATE_SCALE_CODE_ERR_SIGNAL         (1<<10)
-#define  COMM_TASK_CALIBRATE_SCALE_MEASUREMENT_OK_SIGNAL   (1<<11)
-#define  COMM_TASK_CALIBRATE_SCALE_MEASUREMENT_ERR_SIGNAL  (1<<12)
-#define  COMM_TASK_CALIBRATE_SCALE_WEIGHT_OK_SIGNAL        (1<<13)
-#define  COMM_TASK_CALIBRATE_SCALE_WEIGHT_ERR_SIGNAL       (1<<14)
-#define  COMM_TASK_LOCK_LOCK_SUCCESS_SIGNAL                (1<<15)
-#define  COMM_TASK_LOCK_LOCK_FAIL_SIGNAL                   (1<<16)
-#define  COMM_TASK_UNLOCK_LOCK_SUCCESS_SIGNAL              (1<<17)
-#define  COMM_TASK_UNLOCK_LOCK_FAIL_SIGNAL                 (1<<18)
-
 
 /*通信任务子函数超时时间*/
-#define  COMM_TASK_CALIBRATE_SCALE_CODE_TIMEOUT             500
-#define  COMM_TASK_CALIBRATE_SCALE_MEASUREMENT_TIMEOUT      500
-#define  COMM_TASK_CALIBRATE_SCALE_WEIGHT_TIMEOUT           500
-#define  COMM_TASK_CLEAR_ZERO_TIMEOUT                       400
-#define  COMM_TASK_CLEAR_SCALE_TARE_WEIGHT_TIMEOUT          400
-#define  COMM_TASK_UNLOCK_LOCK_TIMEOUT                      500
-#define  COMM_TASK_LOCK_LOCK_TIMEOUT                        500
+#define  COMM_CALIBRATE_SCALE_CODE_TIMEOUT             500
+#define  COMM_CALIBRATE_SCALE_MEASUREMENT_TIMEOUT      500
+#define  COMM_CALIBRATE_SCALE_WEIGHT_TIMEOUT           500
+#define  COMM_CLEAR_ZERO_TIMEOUT                       400
+#define  COMM_CLEAR_SCALE_TARE_WEIGHT_TIMEOUT          400
+#define  COMM_UNLOCK_LOCK_TIMEOUT                      500
+#define  COMM_LOCK_LOCK_TIMEOUT                        500
 
 /*通信协议部分*/
 #define  COMM_CMD_CNT                                       11

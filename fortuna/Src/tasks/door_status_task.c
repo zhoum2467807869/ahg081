@@ -3,8 +3,8 @@
 #include "cmsis_os.h"
 #include "app_common.h"
 #include "ABDK_AHG081_ZK.h"
-#include "lock_task.h"
-#include "door_task.h"
+#include "lock_ctrl_task.h"
+#include "door_status_task.h"
 #define APP_LOG_MODULE_NAME   "[door]"
 #define APP_LOG_MODULE_LEVEL   APP_LOG_LEVEL_DEBUG    
 #include "app_log.h"
@@ -37,7 +37,7 @@ void door_task(void const * argument)
     {
       door_status=DOOR_TASK_DOOR_STATUS_OPEN;
       /*向锁任务发送门开启信号*/
-      osSignalSet(lock_task_hdl,LOCK_TASK_DOOR_STATUS_OPEN_SIGNAL);
+      osSignalSet(lock_ctrl_task_hdl,LOCK_CTRL_TASK_DOOR_STATUS_OPEN_SIGNAL);
     }
   }
   if(door_up_status==door_dwn_status && door_up_status==DOOR_STATUS_CLOSE)
@@ -47,7 +47,7 @@ void door_task(void const * argument)
     {
       door_status=DOOR_TASK_DOOR_STATUS_CLOSE;
       /*向锁任务发送门关闭信号*/
-      osSignalSet(lock_task_hdl,LOCK_TASK_DOOR_STATUS_CLOSE_SIGNAL);
+      osSignalSet(lock_ctrl_task_hdl,LOCK_CTRL_TASK_DOOR_STATUS_CLOSE_SIGNAL);
     } 
   } 
  }  

@@ -8,7 +8,8 @@
 #include "app_error.h"
 
 
-
+#define  DOOR_CTL_POS_GPIO_Port       GPIOC
+#define  DOOR_CTL_POS_Pin             GPIO_PIN_5
 
 
 /*获取锁舌传感器状态*/
@@ -145,11 +146,18 @@ void BSP_AC_TURN_ON_OFF(uint8_t ac,bsp_status_t status)
  HAL_GPIO_WritePin(AC2_CTL_POS_GPIO_Port,AC2_CTL_POS_Pin,(GPIO_PinState)status); 
  }  
 }
-/*锁操作*/
+/*电插锁锁操作*/
 void BSP_LOCK_CTL(bsp_status_t status)
 {
  HAL_GPIO_WritePin(LOCK_CTL_POS_GPIO_Port,LOCK_CTL_POS_Pin,(GPIO_PinState)status); 
 }
+
+/*电磁锁操作*/
+void BSP_DOOR_CTL(bsp_status_t status)
+{
+ HAL_GPIO_WritePin(DOOR_CTL_POS_GPIO_Port,DOOR_CTL_POS_Pin,(GPIO_PinState)status); 
+}
+
 /*玻璃加热电源操作*/
 void BSP_GLASS_PWR_TURN_ON_OFF(bsp_status_t status)
 {

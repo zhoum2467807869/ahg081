@@ -57,20 +57,21 @@
 #include "scale_poll_task.h"
 #include "scale_func_task.h"
 #include "scale_comm_task.h"
-#include "lock_task.h"
-#include "door_task.h"
+#include "lock_ctrl_task.h"
+#include "lock_status_task.h"
+#include "door_status_task.h"
 #include "switch_task.h"
 #include "display_task.h"
-#include "dc_task.h"
-#include "light_task.h"
-#include "fan_task.h"
+#include "dc_ctrl_task.h"
+#include "light_ctrl_task.h"
+#include "fan_ctrl_task.h"
 #include "sys_led_task.h"
 #include "glass_pwr_task.h"
 #include "temperature_task.h"
 #include "compressor_task.h"
 #include "glass_pwr_task.h"
 #include "watch_dog_task.h"
-#include "ups_task.h"
+#include "ups_status_task.h"
 #include "weight_cache_task.h"
 #include "temperature_cache_task.h"
 #include "calibrate_cache_task.h"
@@ -195,7 +196,7 @@ void MX_FREERTOS_Init(void) {
 
   /* Create the thread(s) */
   /* definition and creation of defaultTask */
-  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 256);
+  osThreadDef(defaultTask, StartDefaultTask, osPriorityAboveNormal, 0, 256);
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
@@ -219,7 +220,7 @@ void StartDefaultTask(void const * argument)
   create_user_tasks();
   for(;;)
   {
-    osDelay(1);
+    osDelay(1000);
   }
   /* USER CODE END StartDefaultTask */
 }
@@ -256,9 +257,13 @@ static void create_user_tasks()
   debug_task_hdl = osThreadCreate(osThread(debug_task), NULL); 
   APP_ASSERT(debug_task_hdl); 
   /*创建锁任务*/
-  osThreadDef(lock_task, lock_task, osPriorityNormal, 0, 128);
-  lock_task_hdl = osThreadCreate(osThread(lock_task), NULL); 
-  APP_ASSERT(lock_task_hdl);
+  osThreadDef(lock_ctrl_task, lock_ctrl_task, osPriorityNormal, 0, 256);
+  lock_ctrl_task_hdl = osThreadCreate(osThread(lock_ctrl_task), NULL); 
+  APP_ASSERT(lock_ctrl_task_hdl);
+  /*创建锁状态任务*/
+  osThreadDef(lock_status_task, lock_status_task, osPriorityNormal, 0, 128);
+  lock_status_task_hdl = osThreadCreate(osThread(lock_status_task), NULL); 
+  APP_ASSERT(lock_status_task_hdl);
   /*创建门任务*/
   osThreadDef(door_task,door_task, osPriorityNormal, 0, 128);
   door_task_hdl = osThreadCreate(osThread(door_task), NULL); 
@@ -272,7 +277,7 @@ static void create_user_tasks()
   switch_task_hdl = osThreadCreate(osThread(switch_task), NULL); 
   APP_ASSERT(switch_task_hdl);
   /*创建压缩任务*/
-  osThreadDef(compressor_task, compressor_task, osPriorityNormal, 0, 128);
+  osThreadDef(compressor_task, compressor_task, osPriorityNormal, 0, 256);
   compressor_task_hdl = osThreadCreate(osThread(compressor_task), NULL); 
   APP_ASSERT(compressor_task_hdl);
   /*创建系统LED任务*/
@@ -280,17 +285,17 @@ static void create_user_tasks()
   sys_led_task_hdl = osThreadCreate(osThread(sys_led_task), NULL); 
   APP_ASSERT(sys_led_task_hdl);
   /*创建灯带任务*/
-  osThreadDef(light_task, light_task, osPriorityNormal, 0, 128);
-  light_task_hdl = osThreadCreate(osThread(light_task), NULL); 
-  APP_ASSERT(light_task_hdl);
+  osThreadDef(light_ctrl_task, light_ctrl_task, osPriorityNormal, 0, 128);
+  light_ctrl_task_hdl = osThreadCreate(osThread(light_ctrl_task), NULL); 
+  APP_ASSERT(light_ctrl_task_hdl);
   /*创建风扇任务*/
-  osThreadDef(fan_task, fan_task, osPriorityNormal, 0, 128);
-  fan_task_hdl = osThreadCreate(osThread(fan_task), NULL); 
-  APP_ASSERT(fan_task_hdl);
+  osThreadDef(fan_ctrl_task, fan_ctrl_task, osPriorityNormal, 0, 128);
+  fan_ctrl_task_hdl = osThreadCreate(osThread(fan_ctrl_task), NULL); 
+  APP_ASSERT(fan_ctrl_task_hdl);
   /*创建DC任务*/
-  osThreadDef(dc_task, dc_task, osPriorityNormal, 0, 128);
-  dc_task_hdl = osThreadCreate(osThread(dc_task), NULL); 
-  APP_ASSERT(dc_task_hdl);
+  osThreadDef(dc_ctrl_task, dc_ctrl_task, osPriorityNormal, 0, 128);
+  dc_ctrl_task_hdl = osThreadCreate(osThread(dc_ctrl_task), NULL); 
+  APP_ASSERT(dc_ctrl_task_hdl);
   /*创建玻璃电源任务*/
   osThreadDef(glass_pwr_task, glass_pwr_task, osPriorityNormal, 0, 128);
   glass_pwr_task_hdl = osThreadCreate(osThread(glass_pwr_task), NULL); 
@@ -300,9 +305,9 @@ static void create_user_tasks()
   temperature_task_hdl = osThreadCreate(osThread(temperature_task), NULL); 
   APP_ASSERT(temperature_task_hdl);
   /*创建UPS任务*/
-  osThreadDef(ups_task, ups_task, osPriorityNormal, 0, 128);
-  ups_task_hdl = osThreadCreate(osThread(ups_task), NULL); 
-  APP_ASSERT(ups_task_hdl);
+  osThreadDef(ups_status_task, ups_status_task, osPriorityNormal, 0, 128);
+  ups_status_task_hdl = osThreadCreate(osThread(ups_status_task), NULL); 
+  APP_ASSERT(ups_status_task_hdl);
   /*创建重量缓存任务*/
   osThreadDef(weight_cache_task, weight_cache_task, osPriorityNormal, 0, 256);
   weight_cache_task_hdl = osThreadCreate(osThread(weight_cache_task), NULL); 

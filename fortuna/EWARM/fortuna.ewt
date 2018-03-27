@@ -1212,7 +1212,7 @@
                     <name>$PROJ_DIR$\..\Src\tasks\compressor_task.c</name>
                 </file>
                 <file>
-                    <name>$PROJ_DIR$\..\Src\tasks\dc_task.c</name>
+                    <name>$PROJ_DIR$\..\Src\tasks\dc_ctrl_task.c</name>
                 </file>
                 <file>
                     <name>$PROJ_DIR$\..\Src\tasks\debug_task.c</name>
@@ -1221,10 +1221,10 @@
                     <name>$PROJ_DIR$\..\Src\tasks\display_task.c</name>
                 </file>
                 <file>
-                    <name>$PROJ_DIR$\..\Src\tasks\door_task.c</name>
+                    <name>$PROJ_DIR$\..\Src\tasks\door_status_task.c</name>
                 </file>
                 <file>
-                    <name>$PROJ_DIR$\..\Src\tasks\fan_task.c</name>
+                    <name>$PROJ_DIR$\..\Src\tasks\fan_ctrl_task.c</name>
                 </file>
                 <file>
                     <name>$PROJ_DIR$\..\Src\tasks\glass_pwr_task.c</name>
@@ -1233,10 +1233,13 @@
                     <name>$PROJ_DIR$\..\Src\tasks\host_comm_task.c</name>
                 </file>
                 <file>
-                    <name>$PROJ_DIR$\..\Src\tasks\light_task.c</name>
+                    <name>$PROJ_DIR$\..\Src\tasks\light_ctrl_task.c</name>
                 </file>
                 <file>
-                    <name>$PROJ_DIR$\..\Src\tasks\lock_task.c</name>
+                    <name>$PROJ_DIR$\..\Src\tasks\lock_ctrl_task.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\Src\tasks\lock_status_task.c</name>
                 </file>
                 <file>
                     <name>$PROJ_DIR$\..\Src\tasks\scale_comm_task.c</name>
@@ -1260,7 +1263,7 @@
                     <name>$PROJ_DIR$\..\Src\tasks\temperature_task.c</name>
                 </file>
                 <file>
-                    <name>$PROJ_DIR$\..\Src\tasks\ups_task.c</name>
+                    <name>$PROJ_DIR$\..\Src\tasks\ups_status_task.c</name>
                 </file>
                 <file>
                     <name>$PROJ_DIR$\..\Src\tasks\watch_dog_task.c</name>
