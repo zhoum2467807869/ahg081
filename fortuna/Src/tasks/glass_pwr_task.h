@@ -17,6 +17,8 @@ extern osThreadId glass_pwr_task_hdl;
 #define  GLASS_PWR_TASK_DEBUG_TURN_OFF_SIGNAL      (1<<3)
 #define  GLASS_PWR_TASK_UPS_PWR_ON_SIGNAL          (1<<4)
 #define  GLASS_PWR_TASK_UPS_PWR_OFF_SIGNAL         (1<<5)
-#define  GLASS_PWR_TASK_ALL_SIGNALS                ((1<<6)-1)
+#define  GLASS_PWR_TASK_DOOR_STATUS_OPEN_SIGNAL    (1<<6)
+#define  GLASS_PWR_TASK_DOOR_STATUS_CLOSE_SIGNAL   (1<<7)
+#define  GLASS_PWR_TASK_ALL_SIGNALS                ((1<<8)-1)
 
 #endif
