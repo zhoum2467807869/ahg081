@@ -15,7 +15,7 @@
 #include "ups_status_task.h"
 #include "temperature_task.h"
 #define APP_LOG_MODULE_NAME   "[protocol]"
-#define APP_LOG_MODULE_LEVEL   APP_LOG_LEVEL_ERROR    
+#define APP_LOG_MODULE_LEVEL   APP_LOG_LEVEL_DEBUG    
 #include "app_log.h"
 #include "app_error.h"
 
@@ -418,16 +418,23 @@ static comm_status_t comm_cmd04_process(uint8_t *ptr_param,uint8_t param_len,uin
 /*命令码0x11 查询门的状态 处理函数*/
 static comm_status_t comm_cmd11_process(uint8_t *ptr_param,uint8_t param_len,uint8_t *ptr_send_len) 
 {
- uint8_t state; 
+ uint8_t status; 
  APP_LOG_DEBUG("执行命令0x11.查询门的状态.\r\n");
  if(param_len!=COMM_CMD11_PARAM_SIZE)
  {
    APP_LOG_ERROR("命令0x11参数长度%d不匹配.\r\n",param_len);
    return COMM_ERR;
  }
- state=door_task_get_door_status();;
+ status=door_task_get_door_status();
+ if(status==DOOR_TASK_DOOR_STATUS_OPEN)
+ {
  /*回填门的状态*/
- ptr_param[0]=state;
+ ptr_param[0]=DOOR_OPENED;
+ }
+ else
+ {
+ ptr_param[0]=DOOR_CLOSED; 
+ }
  APP_LOG_DEBUG("获取的门的状态：%d\r\n", ptr_param[0]);
  /*更新需要发送的数据长度*/
  *ptr_send_len+=COMM_CMD11_EXECUTE_RESULT_SIZE;
@@ -447,7 +454,7 @@ static comm_status_t comm_cmd21_process(uint8_t *ptr_param,uint8_t param_len,uin
   }
   /*清除遗留无用的信号*/
   osSignalWait(HOST_COMM_TASK_ALL_SIGNALS,0);
-  osSignalSet(lock_ctrl_task_hdl,LOCK_CTRL_TASK_LOCK_SIGNAL);
+  osSignalSet(lock_ctrl_task_hdl,LOCK_CTRL_TASK_UNLOCK_SIGNAL);
   /*等待处理返回*/
   APP_LOG_DEBUG("等待锁任务返回结果...\r\n");
   signal=osSignalWait(HOST_COMM_TASK_UNLOCK_LOCK_SUCCESS_SIGNAL|HOST_COMM_TASK_UNLOCK_LOCK_FAIL_SIGNAL,COMM_UNLOCK_LOCK_TIMEOUT);
@@ -485,7 +492,7 @@ static comm_status_t comm_cmd22_process(uint8_t *ptr_param,uint8_t param_len,uin
   osSignalWait(HOST_COMM_TASK_ALL_SIGNALS,0);
   /*向锁任务发送关锁消息*/
   APP_LOG_DEBUG("向锁任务发送关锁消息.\r\n");
-  osSignalSet(lock_ctrl_task_hdl,LOCK_CTRL_TASK_UNLOCK_SIGNAL);
+  osSignalSet(lock_ctrl_task_hdl,LOCK_CTRL_TASK_LOCK_SIGNAL);
   /*等待处理返回*/
   APP_LOG_DEBUG("等待锁任务返回结果...\r\n");
   signal=osSignalWait(HOST_COMM_TASK_LOCK_LOCK_SUCCESS_SIGNAL|HOST_COMM_TASK_LOCK_LOCK_SUCCESS_SIGNAL,COMM_LOCK_LOCK_TIMEOUT);
@@ -554,7 +561,7 @@ static comm_status_t comm_cmd31_process(uint8_t *ptr_param,uint8_t param_len,uin
  {
   status=UPS_PWR_OFF;  
  }
- /*回填称重数量*/
+ /*回填*/
  ptr_param[0]=status;
  APP_LOG_DEBUG("获取的UPS的状态：%d\r\n",ptr_param[0]);
  /*更新需要发送的数据长度*/

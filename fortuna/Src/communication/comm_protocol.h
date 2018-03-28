@@ -49,8 +49,8 @@ comm_status_t comm_send_fsm(uint8_t *ptr_buff,uint8_t send_len);
 #define  COMM_CALIBRATE_SCALE_WEIGHT_TIMEOUT           500
 #define  COMM_CLEAR_ZERO_TIMEOUT                       400
 #define  COMM_CLEAR_SCALE_TARE_WEIGHT_TIMEOUT          400
-#define  COMM_UNLOCK_LOCK_TIMEOUT                      500
-#define  COMM_LOCK_LOCK_TIMEOUT                        500
+#define  COMM_UNLOCK_LOCK_TIMEOUT                      650
+#define  COMM_LOCK_LOCK_TIMEOUT                        650
 
 /*通信协议部分*/
 #define  COMM_CMD_CNT                                       11
@@ -113,6 +113,9 @@ typedef enum
  LOCK_UNLOCKED=1,
  LOCK_LOCKING=2,
  LOCK_FAULT=0xFF,
+ DOOR_CLOSED=0,
+ DOOR_OPENED=1,
+ DOOR_DAULT=0xFF,
  UPS_PWR_ON=1,
  UPS_PWR_OFF=2,
  UPS_FAULT=0xFF

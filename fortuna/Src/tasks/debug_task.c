@@ -671,7 +671,7 @@ err_handle2:
   APP_LOG_ERROR("关锁命令长度非法.\r\n");
   continue;
  }
- osSignalSet(lock_ctrl_task_hdl,LOCK_CTRL_TASK_DEBUG_UNLOCK_SIGNAL);
+ osSignalSet(lock_ctrl_task_hdl,LOCK_CTRL_TASK_DEBUG_LOCK_SIGNAL);
  continue;
  }
  /*打开门指示灯*/

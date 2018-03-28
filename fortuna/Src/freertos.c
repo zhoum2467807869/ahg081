@@ -59,6 +59,7 @@
 #include "scale_comm_task.h"
 #include "lock_ctrl_task.h"
 #include "lock_status_task.h"
+#include "lock_switch_task.h"
 #include "door_status_task.h"
 #include "switch_task.h"
 #include "display_task.h"
@@ -196,7 +197,7 @@ void MX_FREERTOS_Init(void) {
 
   /* Create the thread(s) */
   /* definition and creation of defaultTask */
-  osThreadDef(defaultTask, StartDefaultTask, osPriorityAboveNormal, 0, 256);
+  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 256);
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
@@ -264,6 +265,10 @@ static void create_user_tasks()
   osThreadDef(lock_status_task, lock_status_task, osPriorityNormal, 0, 128);
   lock_status_task_hdl = osThreadCreate(osThread(lock_status_task), NULL); 
   APP_ASSERT(lock_status_task_hdl);
+  /*创建锁按键任务*/
+  osThreadDef(lock_switch_task, lock_switch_task, osPriorityNormal, 0, 128);
+  lock_switch_task_hdl = osThreadCreate(osThread(lock_switch_task), NULL); 
+  APP_ASSERT(lock_switch_task_hdl);
   /*创建门任务*/
   osThreadDef(door_task,door_task, osPriorityNormal, 0, 128);
   door_task_hdl = osThreadCreate(osThread(door_task), NULL); 

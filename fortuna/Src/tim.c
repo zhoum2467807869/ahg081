@@ -121,10 +121,10 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef* timHandle)
     /**TIM4 GPIO Configuration    
     PB8     ------> TIM4_CH3 
     */
-    GPIO_InitStruct.Pin = LIGHT_CTL_POS_Pin;
+    GPIO_InitStruct.Pin = LIGHT_CTRL_POS_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-    HAL_GPIO_Init(LIGHT_CTL_POS_GPIO_Port, &GPIO_InitStruct);
+    HAL_GPIO_Init(LIGHT_CTRL_POS_GPIO_Port, &GPIO_InitStruct);
 
   /* USER CODE BEGIN TIM4_MspPostInit 1 */
 
