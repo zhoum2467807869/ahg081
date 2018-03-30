@@ -17,6 +17,7 @@
 #include "temperature_task.h"
 #include "dc_ctrl_task.h"
 #include "light_ctrl_task.h"
+#include "fan_ctrl_task.h"
 #include "glass_pwr_task.h"
 #include "ups_status_task.h"
 #include "debug_task.h"
@@ -714,6 +715,37 @@ err_handle2:
  APP_LOG_DEBUG("CPU负载：%d %%.\r\n",osGetCPUUsage());
  continue;
  }
+ 
+ /*打开风扇*/
+ cmd_len=strlen(DEBUG_TASK_CMD_PWR_ON_FAN);
+ if(memcmp((const char*)cmd,DEBUG_TASK_CMD_PWR_ON_FAN,cmd_len)==0)
+ { 
+ if(recv_len !=cmd_len+DEBUG_TASK_CMD_PWR_ON_FAN_PARAM_LEN)
+ {
+ APP_LOG_ERROR("风扇命令长度非法.\r\n");
+ continue;
+ } 
+ /*向风扇任务发送打开信号*/
+ APP_LOG_DEBUG("向风扇任务发送打开信号.\r\n");
+ osSignalSet(fan_ctrl_task_hdl,FAN_CTRL_TASK_DEBUG_FAN_TURN_ON_SIGNAL);
+ continue;
+ }
+ 
+  /*关闭风扇*/
+ cmd_len=strlen(DEBUG_TASK_CMD_PWR_OFF_FAN);
+ if(memcmp((const char*)cmd,DEBUG_TASK_CMD_PWR_OFF_FAN,cmd_len)==0)
+ { 
+ if(recv_len !=cmd_len+DEBUG_TASK_CMD_PWR_OFF_FAN_PARAM_LEN)
+ {
+ APP_LOG_ERROR("风扇命令长度非法.\r\n");
+ continue;
+ } 
+ /*向风扇任务发送关闭信号*/
+ APP_LOG_DEBUG("向风扇任务发送关闭信号.\r\n");
+ osSignalSet(fan_ctrl_task_hdl,FAN_CTRL_TASK_DEBUG_FAN_TURN_OFF_SIGNAL);
+ continue;
+ }
+ 
  
  }
  }

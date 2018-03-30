@@ -3,7 +3,7 @@
 #include "gpio.h"
 #include "usart.h"
 #include "adc.h"
-#include "tim.h"
+
 
 #define  SYS_LED                        (1<<0)
 #define  DOOR_RED_LED                   (1<<1)
@@ -50,10 +50,10 @@ typedef enum
  DOOR_STATUS_OPEN=GPIO_PIN_SET,
  DOOR_STATUS_CLOSE=GPIO_PIN_RESET,
  /*灯条*/
- LIGHT_CTL_ON=GPIO_PIN_RESET,
- LIGHT_CTL_OFF=GPIO_PIN_SET,
- LIGHT_STATUS_ON=GPIO_PIN_RESET,
- LIGHT_STATUS_OFF=GPIO_PIN_SET,
+ LIGHT_CTL_ON=GPIO_PIN_SET,
+ LIGHT_CTL_OFF=GPIO_PIN_RESET,
+ LIGHT_STATUS_ON=GPIO_PIN_SET,
+ LIGHT_STATUS_OFF=GPIO_PIN_RESET,
  /*风扇*/
  FAN_CTL_ON=GPIO_PIN_SET,
  FAN_CTL_OFF=GPIO_PIN_RESET,

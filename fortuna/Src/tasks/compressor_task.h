@@ -10,7 +10,7 @@ extern osThreadId compressor_task_hdl;
 
 /*定义压缩机的温度工作区间*/
 #define  COMPRESSOR_TASK_T_MIN                   4
-#define  COMPRESSOR_TASK_T_MAX                   8
+#define  COMPRESSOR_TASK_T_MAX                   7
 
 /*压缩机连续工作的最大时间长 最长连续时间1小时30分钟*/
 #define  COMPRESSOR_TASK_WORK_TIMEOUT           (90*60*1000UL)

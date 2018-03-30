@@ -5,6 +5,7 @@
 #include "ABDK_AHG081_ZK.h"
 #include "ntc_3950.h"
 #include "temperature_task.h"
+#include "compressor_task.h"
 #include "adc.h"
 #define APP_LOG_MODULE_NAME   "[temperature]"
 #define APP_LOG_MODULE_LEVEL   APP_LOG_LEVEL_INFO    
@@ -104,6 +105,32 @@ average_temperature.hold_time+=TEMPERATURE_SAMPLE_TIME;
 
 }
 
+static void update_temperature_warning()
+{
+ static app_bool_t is_high_t_warning_send=APP_FALSE;
+ static app_bool_t is_low_t_warning_send=APP_FALSE;
+ 
+ if(average_temperature.temperature!=TEMPERATURE_TASK_ERR_T_VALUE && \
+    average_temperature.temperature>COMPRESSOR_TASK_T_MAX         && \
+    is_high_t_warning_send==APP_FALSE)
+  {
+   APP_LOG_DEBUG("向压缩机发送开压缩机信号.\r\n");
+   osSignalSet(compressor_task_hdl,COMPRESSOR_TASK_PWR_TURN_ON_SIGNAL);
+   is_high_t_warning_send=APP_TRUE;
+   is_low_t_warning_send=APP_FALSE;
+  }
+ if((average_temperature.temperature==TEMPERATURE_TASK_ERR_T_VALUE || \
+    average_temperature.temperature<COMPRESSOR_TASK_T_MIN) && is_low_t_warning_send==APP_FALSE)
+  {
+   APP_LOG_DEBUG("向压缩机发送关压缩机信号.\r\n");
+   osSignalSet(compressor_task_hdl,COMPRESSOR_TASK_PWR_TURN_OFF_SIGNAL);
+   is_high_t_warning_send=APP_FALSE;
+   is_low_t_warning_send=APP_TRUE;
+  }
+
+}
+
+
 int8_t get_temperature(uint8_t t_idx)
 {
  if(t_idx > TEMPERATURE_CNT-1)
@@ -164,5 +191,7 @@ void temperature_task(void const * argument)
  }
  /*计算更新平均值*/
  update_average_temperature();
+ /*更新温度警告*/
+ update_temperature_warning();
  }
 }

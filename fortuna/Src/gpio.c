@@ -96,7 +96,7 @@ void MX_GPIO_Init(void)
                           |DIGIT_LED_E_CTL_POS_Pin|DIGIT_LED_DP_CTL_POS_Pin|DIGIT_LED_D_CTL_POS_Pin|DIGIT_LED_B_CTL_POS_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, DIGIT_LED_COM3_CTL_POS_Pin|DIGIT_LED_COM5_CTL_POS_Pin|FAN_CTL_POS_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, DIGIT_LED_COM3_CTL_POS_Pin|DIGIT_LED_COM5_CTL_POS_Pin|LIGHT_CTRL_POS_Pin|FAN_CTL_POS_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOD, DIGIT_LED_COM2_CTL_POS_Pin|RS485_RT_CTL_POS_Pin, GPIO_PIN_RESET);
@@ -147,8 +147,8 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PBPin PBPin PBPin */
-  GPIO_InitStruct.Pin = DIGIT_LED_COM3_CTL_POS_Pin|DIGIT_LED_COM5_CTL_POS_Pin|FAN_CTL_POS_Pin;
+  /*Configure GPIO pins : PBPin PBPin PBPin PBPin */
+  GPIO_InitStruct.Pin = DIGIT_LED_COM3_CTL_POS_Pin|DIGIT_LED_COM5_CTL_POS_Pin|LIGHT_CTRL_POS_Pin|FAN_CTL_POS_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);

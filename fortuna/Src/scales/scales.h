@@ -22,7 +22,7 @@ app_bool_t get_net_weight(uint8_t sclae,int16_t *ptr_net_weight);
 
 
 /*称重单元数量*/
-#define  SCALES_CNT_MAX                                4
+#define  SCALES_CNT_MAX                                5
 
 /*电子秤重量错误值定义*/
 #define  SCALE_NET_WEIGHT_TIMEOUT_CNT                  10/*连续10次读不到称的重量数据就定义为超时*/
