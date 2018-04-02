@@ -5,6 +5,7 @@
 #include "ABDK_AHG081_ZK.h"
 #include "ups_status_task.h"
 #include "light_ctrl_task.h"
+#include "dc_ctrl_task.h"
 #include "lock_ctrl_task.h"
 #include "fan_ctrl_task.h"
 #include "glass_pwr_task.h"
@@ -50,6 +51,7 @@ if(status1==UPS_PWR_STATUS_ON && status2==UPS_PWR_STATUS_ON)
   osSignalSet(light_ctrl_task_hdl,LIGHT_CTRL_TASK_UPS_PWR_ON_SIGNAL);
   osSignalSet(glass_pwr_task_hdl,GLASS_PWR_TASK_UPS_PWR_ON_SIGNAL);
   osSignalSet(fan_ctrl_task_hdl,FAN_CTRL_TASK_UPS_PWR_ON_SIGNAL);
+  osSignalSet(dc_ctrl_task_hdl,DC_CTRL_TASK_12V_PWR_ON_SIGNAL);
  }
  }
 }
@@ -67,6 +69,7 @@ else
   osSignalSet(light_ctrl_task_hdl,LIGHT_CTRL_TASK_UPS_PWR_OFF_SIGNAL);
   osSignalSet(glass_pwr_task_hdl,GLASS_PWR_TASK_UPS_PWR_OFF_SIGNAL);
   osSignalSet(fan_ctrl_task_hdl,FAN_CTRL_TASK_UPS_PWR_OFF_SIGNAL);
+  osSignalSet(dc_ctrl_task_hdl,DC_CTRL_TASK_12V_PWR_OFF_SIGNAL);
  }
  }
 }

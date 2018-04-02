@@ -5,7 +5,7 @@
 #include "scales.h"
 #include "modbus_poll.h"
 #define APP_LOG_MODULE_NAME   "[scales]"
-#define APP_LOG_MODULE_LEVEL   APP_LOG_LEVEL_DEBUG    
+#define APP_LOG_MODULE_LEVEL   APP_LOG_LEVEL_OFF    
 #include "app_log.h"
 #include "app_error.h"
 
