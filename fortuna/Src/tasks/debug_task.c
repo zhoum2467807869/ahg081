@@ -81,10 +81,10 @@ void debug_task(void const * argument)
   if(ret==APP_TRUE)
   {
   int16_t net_weight[SCALES_CNT_MAX];
-  get_net_weight(0,net_weight);
   APP_LOG_DEBUG("电子秤获取净重成功.\r\n");
   for(uint8_t i=0;i< SCALES_CNT_MAX;i++)
   {
+  get_net_weight(i+1,&net_weight[i]);
   APP_LOG_ARRAY("%d#称净重值：%dg.\r\n",i+1,net_weight[i]);
   }
   }
