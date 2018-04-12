@@ -3,6 +3,7 @@
 #include "cmsis_os.h"
 #include "ABDK_AHG081_ZK.h"
 #include "lock_ctrl_task.h"
+#include "lock_status_task.h"
 #include "ups_status_task.h"
 #include "light_ctrl_task.h"
 #include "glass_pwr_task.h"
@@ -68,10 +69,19 @@ static void lock_timer_stop()
 
 static void lock_timer_expired(void const * argument)
 {
- APP_LOG_DEBUG("关锁定时器到达.\r\n");
- APP_LOG_DEBUG("关锁失败.\r\n");
- APP_LOG_DEBUG("向主机通信任务发送关锁失败信号.\r\n");
- osSignalSet(host_comm_task_hdl,HOST_COMM_TASK_LOCK_LOCK_FAIL_SIGNAL);  
+   APP_LOG_DEBUG("关锁定时器到达.\r\n");
+   if(lock_status_task_get_lock_status()==LOCK_STATUS_TASK_LOCK_STATUS_LOCK)
+   {
+   APP_LOG_DEBUG("锁是关闭状态.\r\n");
+   APP_LOG_DEBUG("主机通信任务发送关锁成功信号.\r\n");
+   /*主机通信任务发送关锁成功信号*/
+   osSignalSet(host_comm_task_hdl,HOST_COMM_TASK_LOCK_LOCK_SUCCESS_SIGNAL);   
+   }
+   else
+   {
+   APP_LOG_DEBUG("向主机通信任务发送关锁失败信号.\r\n");
+   osSignalSet(host_comm_task_hdl,HOST_COMM_TASK_LOCK_LOCK_FAIL_SIGNAL);  
+   }
 }
 
 static void unlock_timer_init()
@@ -93,14 +103,19 @@ static void unlock_timer_stop()
  
 static void unlock_timer_expired(void const * argument)
 {
- APP_LOG_DEBUG("开锁定时器到达.\r\n");
- APP_LOG_ERROR("开锁失败.\r\n");
-
- APP_LOG_DEBUG("主机通信任务发送开锁失败信号.\r\n");
- osSignalSet(host_comm_task_hdl,HOST_COMM_TASK_UNLOCK_LOCK_FAIL_SIGNAL); 
- 
- /*如果开锁失败就立刻把锁锁死*/
- lock_ctrl_task_lock_lock(); 
+   APP_LOG_DEBUG("开锁定时器到达.\r\n");
+   if(lock_status_task_get_lock_status()==LOCK_STATUS_TASK_LOCK_STATUS_UNLOCK)
+   {
+   APP_LOG_DEBUG("锁是打开状态.\r\n");
+   APP_LOG_DEBUG("主机通信任务发送开锁成功信号.\r\n");
+   /*主机通信任务发送开锁成功信号*/
+   osSignalSet(host_comm_task_hdl,HOST_COMM_TASK_UNLOCK_LOCK_SUCCESS_SIGNAL);   
+   }
+   else
+   {
+   APP_LOG_DEBUG("主机通信任务发送开锁失败信号.\r\n");
+   osSignalSet(host_comm_task_hdl,HOST_COMM_TASK_UNLOCK_LOCK_FAIL_SIGNAL);
+   }
 }
 
 /*电磁锁吸住门*/
@@ -164,7 +179,7 @@ void lock_ctrl_task(void const * argument)
    /*收到关锁信号*/
    if(sig.value.signals & LOCK_CTRL_TASK_LOCK_SIGNAL)
    {
-    APP_LOG_DEBUG("收到关锁信号.关锁.\r\n");
+    APP_LOG_DEBUG("收到关锁信号.关锁.\r\n"); 
     unlock_timer_stop();
     lock_timer_start();
     lock_ctrl_task_lock_lock();
@@ -172,17 +187,15 @@ void lock_ctrl_task(void const * argument)
    /*收到开锁信号*/
    if(sig.value.signals & LOCK_CTRL_TASK_UNLOCK_SIGNAL)
    {
-    APP_LOG_DEBUG("收到开锁信号.开锁.\r\n");
-    lock_timer_stop();
-    unlock_timer_start();
-    lock_ctrl_task_unlock_lock();
+   APP_LOG_DEBUG("收到开锁信号.开锁.\r\n");       
+   lock_timer_stop();
+   unlock_timer_start();
+   lock_ctrl_task_unlock_lock();
    }
    /*收到门的状态变为打开*/
    if(sig.value.signals & LOCK_CTRL_TASK_DOOR_STATUS_OPEN_SIGNAL)
    {
     APP_LOG_DEBUG("门状态变化->打开.\r\n");
-    /*收到门打开后 保证门开打开后锁是开着的*/
-    lock_ctrl_task_unlock_lock();
    }
    
    /*收到门的状态变为关闭*/
@@ -210,6 +223,7 @@ void lock_ctrl_task(void const * argument)
     /*显示对应的灯光*/
     lock_ctrl_task_turn_on_unlock_led();
     lock_ctrl_task_unlock_door();
+    APP_LOG_DEBUG("主机通信任务发送开锁成功信号.\r\n");
     /*主机通信任务发送开锁成功信号*/
     osSignalSet(host_comm_task_hdl,HOST_COMM_TASK_UNLOCK_LOCK_SUCCESS_SIGNAL);
    } 

@@ -11,6 +11,7 @@
 #include "comm_port_timer.h"
 #include "scale_func_task.h"
 #include "lock_ctrl_task.h"
+#include "lock_status_task.h"
 #include "door_status_task.h"
 #include "ups_status_task.h"
 #include "temperature_task.h"
@@ -451,7 +452,7 @@ static comm_status_t comm_cmd21_process(uint8_t *ptr_param,uint8_t param_len,uin
   {
    APP_LOG_ERROR("命令0x21参数长度%d不匹配.\r\n",param_len);
    return COMM_ERR;
-  }
+  }  
   /*清除遗留无用的信号*/
   osSignalWait(HOST_COMM_TASK_ALL_SIGNALS,0);
   osSignalSet(lock_ctrl_task_hdl,LOCK_CTRL_TASK_UNLOCK_SIGNAL);

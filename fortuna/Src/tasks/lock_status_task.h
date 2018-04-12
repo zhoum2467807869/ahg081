@@ -15,7 +15,7 @@ extern void lock_status_task(void const * argument);
 #define  LOCK_STATUS_TASK_LOCK_STATUS_UNLOCK          2
 #define  LOCK_STATUS_TASK_LOCK_STATUS_INIT            3
 
-
+uint8_t lock_status_task_get_lock_status();
 
 
 
