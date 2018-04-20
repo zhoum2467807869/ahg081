@@ -11,6 +11,7 @@ St library for communicating with modbus slaves over RS232/485 (via RTU protocol
 #include "FreeRTOS.h"
 #include "task.h"
 #include "cmsis_os.h"
+#include "app_common.h"
 #include "event_groups.h"
 #include "modbus_poll.h"
 #include "mb_poll_port_serial.h"

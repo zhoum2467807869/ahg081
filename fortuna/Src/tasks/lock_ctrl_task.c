@@ -1,6 +1,7 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #include "cmsis_os.h"
+#include "app_common.h"
 #include "ABDK_AHG081_ZK.h"
 #include "lock_ctrl_task.h"
 #include "lock_status_task.h"

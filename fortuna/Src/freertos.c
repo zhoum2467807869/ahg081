@@ -153,7 +153,7 @@ __weak void vApplicationStackOverflowHook(xTaskHandle xTask, signed char *pcTask
    /* Run time stack overflow checking is performed if
    configCHECK_FOR_STACK_OVERFLOW is defined to 1 or 2. This hook function is
    called if a stack overflow is detected. */
-  APP_LOG_ERROR("%s任务栈溢�?.\r\n",pcTaskName);
+  APP_LOG_ERROR("%s任务栈溢出.\r\n",pcTaskName);
   APP_ERROR_HANDLER(0);
 }
 /* USER CODE END 4 */
@@ -229,7 +229,7 @@ void StartDefaultTask(void const * argument)
 /* USER CODE BEGIN Application */
 static void create_user_tasks()
 {
- /*创建任务同步事件�?*/
+ /*创建任务同步事件组*/
   task_sync_evt_group_hdl=xEventGroupCreate();
   APP_ASSERT(task_sync_evt_group_hdl);
   
@@ -237,44 +237,44 @@ static void create_user_tasks()
   osThreadDef(host_comm_task, host_comm_task, osPriorityNormal, 0, 256);
   host_comm_task_hdl = osThreadCreate(osThread(host_comm_task), NULL); 
   APP_ASSERT(host_comm_task_hdl);
-  /*创建电子秤功能任�?*/
+  /*创建电子秤功能任务*/
   osThreadDef(scale_func_task, scale_func_task, osPriorityNormal, 0, 256);
   scale_func_task_hdl = osThreadCreate(osThread(scale_func_task), NULL); 
   APP_ASSERT(scale_func_task_hdl);
-  /*创建电子秤轮询任�?*/
+  /*创建电子秤轮询任务*/
   osThreadDef(scale_poll_task, scale_poll_task, osPriorityNormal, 0, 256);
   scale_poll_task_hdl = osThreadCreate(osThread(scale_poll_task), NULL); 
   APP_ASSERT(scale_poll_task_hdl);
-  /*创建电子称�?�信任务*/
+  /*创建电子称通信任务*/
   osThreadDef(scale_comm_task, scale_comm_task, osPriorityNormal, 0, 256);
   scale_comm_task_hdl = osThreadCreate(osThread(scale_comm_task), NULL); 
   APP_ASSERT(scale_comm_task_hdl);
-  /*创建看门狗任�?*/
-  osThreadDef(watch_dog_task, watch_dog_task, osPriorityNormal, 0, 128);
+  /*创建看门狗任务*/
+  osThreadDef(watch_dog_task, watch_dog_task, osPriorityNormal, 0, 256);
   watch_dog_task_hdl = osThreadCreate(osThread(watch_dog_task), NULL); 
   APP_ASSERT(watch_dog_task_hdl); 
   /*创建调试任务*/
   osThreadDef(debug_task, debug_task, osPriorityNormal, 0, 256);
   debug_task_hdl = osThreadCreate(osThread(debug_task), NULL); 
   APP_ASSERT(debug_task_hdl); 
-  /*创建锁任�?*/
+  /*创建锁任务*/
   osThreadDef(lock_ctrl_task, lock_ctrl_task, osPriorityNormal, 0, 256);
   lock_ctrl_task_hdl = osThreadCreate(osThread(lock_ctrl_task), NULL); 
   APP_ASSERT(lock_ctrl_task_hdl);
-  /*创建锁状态任�?*/
-  osThreadDef(lock_status_task, lock_status_task, osPriorityNormal, 0, 128);
+  /*创建锁状态任务*/
+  osThreadDef(lock_status_task, lock_status_task, osPriorityNormal, 0, 256);
   lock_status_task_hdl = osThreadCreate(osThread(lock_status_task), NULL); 
   APP_ASSERT(lock_status_task_hdl);
-  /*创建锁按键任�?*/
-  osThreadDef(lock_switch_task, lock_switch_task, osPriorityNormal, 0, 128);
+  /*创建锁按键任务*/
+  osThreadDef(lock_switch_task, lock_switch_task, osPriorityNormal, 0, 256);
   lock_switch_task_hdl = osThreadCreate(osThread(lock_switch_task), NULL); 
   APP_ASSERT(lock_switch_task_hdl);
-  /*创建门任�?*/
-  osThreadDef(door_task,door_task, osPriorityNormal, 0, 128);
+  /*创建门任务*/
+  osThreadDef(door_task,door_task, osPriorityNormal, 0, 256);
   door_task_hdl = osThreadCreate(osThread(door_task), NULL); 
   APP_ASSERT(door_task_hdl);
-  /*创建数码管显示任�?*/
-  osThreadDef(display_task, display_task, osPriorityNormal, 0, 128);
+  /*创建数码管显示任务*/
+  osThreadDef(display_task, display_task, osPriorityNormal, 0, 256);
   display_task_hdl = osThreadCreate(osThread(display_task), NULL); 
   APP_ASSERT(display_task_hdl);
   /*创建按键任务*/
@@ -286,31 +286,31 @@ static void create_user_tasks()
   compressor_task_hdl = osThreadCreate(osThread(compressor_task), NULL); 
   APP_ASSERT(compressor_task_hdl);
   /*创建系统LED任务*/
-  osThreadDef(sys_led_task, sys_led_task, osPriorityNormal, 0, 128);
+  osThreadDef(sys_led_task, sys_led_task, osPriorityNormal, 0, 256);
   sys_led_task_hdl = osThreadCreate(osThread(sys_led_task), NULL); 
   APP_ASSERT(sys_led_task_hdl);
   /*创建灯带任务*/
-  osThreadDef(light_ctrl_task, light_ctrl_task, osPriorityNormal, 0, 128);
+  osThreadDef(light_ctrl_task, light_ctrl_task, osPriorityNormal, 0, 256);
   light_ctrl_task_hdl = osThreadCreate(osThread(light_ctrl_task), NULL); 
   APP_ASSERT(light_ctrl_task_hdl);
   /*创建风扇任务*/
-  osThreadDef(fan_ctrl_task, fan_ctrl_task, osPriorityNormal, 0, 128);
+  osThreadDef(fan_ctrl_task, fan_ctrl_task, osPriorityNormal, 0, 256);
   fan_ctrl_task_hdl = osThreadCreate(osThread(fan_ctrl_task), NULL); 
   APP_ASSERT(fan_ctrl_task_hdl);
   /*创建DC任务*/
-  osThreadDef(dc_ctrl_task, dc_ctrl_task, osPriorityNormal, 0, 128);
+  osThreadDef(dc_ctrl_task, dc_ctrl_task, osPriorityNormal, 0, 256);
   dc_ctrl_task_hdl = osThreadCreate(osThread(dc_ctrl_task), NULL); 
   APP_ASSERT(dc_ctrl_task_hdl);
   /*创建玻璃电源任务*/
-  osThreadDef(glass_pwr_task, glass_pwr_task, osPriorityNormal, 0, 128);
+  osThreadDef(glass_pwr_task, glass_pwr_task, osPriorityNormal, 0, 256);
   glass_pwr_task_hdl = osThreadCreate(osThread(glass_pwr_task), NULL); 
   APP_ASSERT(glass_pwr_task_hdl);
   /*创建温度任务*/
-  osThreadDef(temperature_task, temperature_task, osPriorityNormal, 0, 128);
+  osThreadDef(temperature_task, temperature_task, osPriorityNormal, 0, 256);
   temperature_task_hdl = osThreadCreate(osThread(temperature_task), NULL); 
   APP_ASSERT(temperature_task_hdl);
   /*创建UPS任务*/
-  osThreadDef(ups_status_task, ups_status_task, osPriorityNormal, 0, 128);
+  osThreadDef(ups_status_task, ups_status_task, osPriorityNormal, 0, 256);
   ups_status_task_hdl = osThreadCreate(osThread(ups_status_task), NULL); 
   APP_ASSERT(ups_status_task_hdl);
   /*创建重量缓存任务*/
@@ -326,7 +326,7 @@ static void create_user_tasks()
   calibrate_cache_task_hdl = osThreadCreate(osThread(calibrate_cache_task), NULL); 
   APP_ASSERT(calibrate_cache_task_hdl);
 
-  APP_LOG_INFO("@�?有的任务创建成功.\r\n"); 
+  APP_LOG_INFO("@所有的任务创建成功.\r\n"); 
 }
 /* USER CODE END Application */
 

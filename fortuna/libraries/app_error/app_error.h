@@ -7,8 +7,8 @@
  * @brief Common application error handler and macros for utilizing a common error handler.
  */
 
-#ifndef APP_ERROR_H__
-#define APP_ERROR_H__
+#ifndef __APP_ERROR_H__
+#define __APP_ERROR_H__
 
 #include <stdint.h>
 #include <stdio.h>
@@ -21,10 +21,10 @@ extern "C" {
 
   
 /*断言处理*/
-__WEAK void app_assert_handler(uint16_t line,uint8_t *ptr_file_name);
+__weak void app_assert_handler(uint16_t line,uint8_t *ptr_file_name);
 
 /*错误处理*/
-__WEAK void app_error_handler(uint32_t err_code,uint16_t line,uint8_t *ptr_file_fname);
+__weak void app_error_handler(uint32_t err_code,uint16_t line,uint8_t *ptr_file_fname);
 
 
 #define APP_ASSERT(expr)                                                    \

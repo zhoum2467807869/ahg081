@@ -17,7 +17,7 @@
 #include "app_error.h"
 
 /*断言处理*/
-__WEAK void app_assert_handler(uint16_t line,uint8_t *ptr_file_name)
+__weak void app_assert_handler(uint16_t line,uint8_t *ptr_file_name)
 {
 #if APP_LOG_ENABLED == 0
     UNUSED_VARIABLE(line);
@@ -33,7 +33,7 @@ __WEAK void app_assert_handler(uint16_t line,uint8_t *ptr_file_name)
 }
 
 /*错误处理*/
-__WEAK void app_error_handler(uint32_t err_code,uint16_t line,uint8_t *ptr_file_name)
+__weak void app_error_handler(uint32_t err_code,uint16_t line,uint8_t *ptr_file_name)
 {
 
 #if APP_LOG_ENABLED == 0
