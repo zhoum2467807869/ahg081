@@ -20,7 +20,7 @@ extern osThreadId lock_ctrl_task_hdl;
 #define  LOCK_CTRL_TASK_WAIT_TIMEOUT                   osWaitForever
 #define  LOCK_CTRL_TASK_LOCK_TIMEOUT                   800
 #define  LOCK_CTRL_TASK_UNLOCK_TIMEOUT                 800
-#define  LOCK_CTRL_TASK_AUTO_LOCK_TIMEOUT              (10*1000)/*10秒钟无人开门自动上锁*/
+#define  LOCK_CTRL_TASK_AUTO_LOCK_TIMEOUT              (6*1000)/*6秒钟无人开门自动上锁*/
 
 #define  LOCK_CTRL_TASK_LOCK_TYPE_AUTO                  1/*自动上锁*/
 #define  LOCK_CTRL_TASK_LOCK_TYPE_MAN                   2/*手动上锁*/

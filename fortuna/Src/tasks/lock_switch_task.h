@@ -1,8 +1,8 @@
 #ifndef  __LOCK_SWITCH_TASK_H__
 #define  __LOCK_SWITCH_TASK_H__
 
-#define  LOCK_SWITCH_TASK_INTERVAL                      10
-#define  LOCK_SWITCH_TASK_WAIT_TIMEOUT                  5000
+#define  LOCK_SWITCH_TASK_INTERVAL                      20
+#define  LOCK_SWITCH_TASK_WAIT_TIMEOUT                  500
 
 
 #define  LOCK_SWITCH_TASK_LOCK_SWITCH_STATUS_PRESS      1

@@ -1239,6 +1239,9 @@
                     <name>$PROJ_DIR$\..\Src\tasks\lock_ctrl_task.c</name>
                 </file>
                 <file>
+                    <name>$PROJ_DIR$\..\Src\tasks\lock_door_cache_task.c</name>
+                </file>
+                <file>
                     <name>$PROJ_DIR$\..\Src\tasks\lock_status_task.c</name>
                 </file>
                 <file>
@@ -1298,9 +1301,6 @@
             </file>
             <file>
                 <name>$PROJ_DIR$\..\Src\stm32f1xx_it.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\Src\tim.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\Src\usart.c</name>

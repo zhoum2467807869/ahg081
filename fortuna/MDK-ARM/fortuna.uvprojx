@@ -534,6 +534,11 @@
               <FileType>1</FileType>
               <FilePath>..\Src\tasks\weight_cache_task.c</FilePath>
             </File>
+            <File>
+              <FileName>lock_door_cache_task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\tasks\lock_door_cache_task.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

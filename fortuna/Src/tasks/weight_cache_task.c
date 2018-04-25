@@ -8,7 +8,7 @@
 #include "switch_task.h"
 #include "weight_cache_task.h"
 #define APP_LOG_MODULE_NAME   "[w_cache]"
-#define APP_LOG_MODULE_LEVEL   APP_LOG_LEVEL_INFO    
+#define APP_LOG_MODULE_LEVEL   APP_LOG_LEVEL_OFF    
 #include "app_log.h"
 #include "app_error.h"
 

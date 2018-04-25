@@ -20,7 +20,7 @@ St library for communicating with modbus slaves over RS232/485 (via RTU protocol
 #include "app_util.h"
 #include "app_error.h"
 #define APP_LOG_MODULE_NAME   "[mb_poll]"
-#define APP_LOG_MODULE_LEVEL   APP_LOG_LEVEL_DEBUG    
+#define APP_LOG_MODULE_LEVEL   APP_LOG_LEVEL_OFF    
 #include "app_log.h"
 
 

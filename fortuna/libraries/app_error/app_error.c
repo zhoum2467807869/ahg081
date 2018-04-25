@@ -11,6 +11,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "stm32f1xx.h"
+#include "app_common.h"
 #include "app_util.h"
 #define APP_LOG_MODULE_NAME "[app_error]"
 #include "app_log.h"

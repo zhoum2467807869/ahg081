@@ -76,11 +76,13 @@
 #include "weight_cache_task.h"
 #include "temperature_cache_task.h"
 #include "calibrate_cache_task.h"
+#include "lock_door_cache_task.h"
 #include "debug_task.h"
 #define APP_LOG_MODULE_NAME   "[freertos]"
 #define APP_LOG_MODULE_LEVEL   APP_LOG_LEVEL_DEBUG    
 #include "app_log.h"
 #include "app_error.h"
+#include "firmware_version.h"
 /* USER CODE END Includes */
 
 /* Variables -----------------------------------------------------------------*/
@@ -215,6 +217,8 @@ void StartDefaultTask(void const * argument)
 
   /* USER CODE BEGIN StartDefaultTask */
   /* Infinite loop */
+  APP_LOG_INFO("######      固件版本：%s      #######\r\n",FIRMWARE_VERSION_CODE);
+  
   /*创建用户任务*/
   APP_LOG_DEBUG("创建用户任务...\r\n");
   
@@ -325,7 +329,10 @@ static void create_user_tasks()
   osThreadDef(calibrate_cache_task,calibrate_cache_task, osPriorityNormal, 0, 256);
   calibrate_cache_task_hdl = osThreadCreate(osThread(calibrate_cache_task), NULL); 
   APP_ASSERT(calibrate_cache_task_hdl);
-
+  /*创建锁 门状态缓存任务*/
+  osThreadDef(ld_cache_task,ld_cache_task, osPriorityNormal, 0, 256);
+  ld_cache_task_hdl = osThreadCreate(osThread(ld_cache_task), NULL); 
+  APP_ASSERT(ld_cache_task_hdl);
   APP_LOG_INFO("@所有的任务创建成功.\r\n"); 
 }
 /* USER CODE END Application */

@@ -10,6 +10,7 @@
 #include "weight_cache_task.h"
 #include "temperature_cache_task.h"
 #include "calibrate_cache_task.h"
+#include "lock_door_cache_task.h"
 #include "ABDK_AHG081_ZK.h"
 #define APP_LOG_MODULE_NAME   "[switch]"
 #define APP_LOG_MODULE_LEVEL   APP_LOG_LEVEL_INFO    
@@ -94,8 +95,8 @@ static void wt_sw_short_press_normal()
 {
  if(ptr_display_buff==w_dis_buff)
  {
-   ptr_display_buff=t_dis_buff;
-   APP_LOG_DEBUG("切换成温度显示.\r\n");
+   ptr_display_buff=ld_dis_buff;
+   APP_LOG_DEBUG("切换成锁门状态显示.\r\n");
  }
  else
  {
@@ -376,8 +377,8 @@ void switch_task(void const * argument)
  }
  else
  {
-   if(ptr_display_buff!=t_dis_buff)
-    ptr_display_buff=t_dis_buff;
+   if(ptr_display_buff!=ld_dis_buff)
+    ptr_display_buff=ld_dis_buff;
  }
  /*除去温度和重量切换按键 处理其他按键的状态*/
  for(uint8_t i=W_SWITCH_IDX;i<SWITCH_CNT;i++)

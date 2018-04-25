@@ -24,16 +24,16 @@ uint8_t door_task_get_door_status()
 
 void door_task(void const * argument)
 {
- bsp_status_t door_up_status,door_dwn_status;
+ bsp_status_t door_up_status;
  APP_LOG_INFO("@门状态任务开始.\r\n");
  
  while(1)
  {
   osDelay(DOOR_TASK_INTERVAL);
   door_up_status=bsp_get_door_up_status();
-  door_dwn_status=bsp_get_door_dwn_status();
-  
-  if(door_dwn_status==door_up_status && door_up_status==DOOR_STATUS_OPEN)
+ 
+  if(door_up_status==DOOR_STATUS_OPEN)
+ 
   {
     /*门从关闭状态变化成开启状态*/
     if(door_status!=DOOR_TASK_DOOR_STATUS_OPEN)
@@ -46,7 +46,7 @@ void door_task(void const * argument)
       osSignalSet(lock_switch_task_hdl,LOCK_SWITCH_TASK_DOOR_STATUS_OPEN_SIGNAL);
     }
   }
-  if(door_dwn_status==door_up_status && door_up_status==DOOR_STATUS_CLOSE)
+  if(door_up_status==DOOR_STATUS_CLOSE)
   {
      /*门从开启状态变化成关闭状态*/
     if(door_status!=DOOR_TASK_DOOR_STATUS_CLOSE)

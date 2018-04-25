@@ -28,6 +28,7 @@
 "fortuna\ups_status_task.o"
 "fortuna\watch_dog_task.o"
 "fortuna\weight_cache_task.o"
+"fortuna\lock_door_cache_task.o"
 "fortuna\scales.o"
 "fortuna\freertos.o"
 "fortuna\main.o"

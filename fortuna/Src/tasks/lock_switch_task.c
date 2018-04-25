@@ -25,9 +25,18 @@ while(1)
 {
 osDelay(LOCK_SWITCH_TASK_INTERVAL);
 lock_sw_status=bsp_get_lock_sw_status();
-if(lock_sw_status==SW_STATUS_PRESS)
+
+if(lock_sw_status==SW_STATUS_PRESS && lock_switch_status!= lock_sw_status)
 {
- BSP_LOCK_CTL(LOCK_CTL_UNLOCK);
+APP_LOG_DEBUG("按键状态变化-->按下.\r\n");
+lock_switch_status=lock_sw_status;
+osSignalSet(lock_ctrl_task_hdl,LOCK_CTRL_TASK_UNLOCK_SIGNAL);
 }
+if(lock_sw_status==SW_STATUS_RELEASE && lock_switch_status!= lock_sw_status)
+{
+APP_LOG_DEBUG("按键状态变化-->释放.\r\n");
+lock_switch_status=lock_sw_status;
+}
+
 }  
 }

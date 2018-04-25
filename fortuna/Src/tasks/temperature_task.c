@@ -8,7 +8,7 @@
 #include "compressor_task.h"
 #include "adc.h"
 #define APP_LOG_MODULE_NAME   "[temperature]"
-#define APP_LOG_MODULE_LEVEL   APP_LOG_LEVEL_INFO    
+#define APP_LOG_MODULE_LEVEL   APP_LOG_LEVEL_OFF    
 #include "app_log.h"
 #include "app_error.h"
 

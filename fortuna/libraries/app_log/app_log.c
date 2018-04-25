@@ -1,5 +1,6 @@
 #define APP_LOG_MODULE_NAME   "[app_log]"
-#define APP_LOG_MODULE_LEVEL   APP_LOG_LEVEL_DEBUG    
+#define APP_LOG_MODULE_LEVEL   APP_LOG_LEVEL_DEBUG   
+#include "app_common.h"
 #include "app_log.h"
 
 

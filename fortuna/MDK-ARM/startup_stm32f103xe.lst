@@ -580,17 +580,17 @@ ARM Macro Assembler    Page 9
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
 ork --depend=fortuna\startup_stm32f103xe.d -ofortuna\startup_stm32f103xe.o -I..
-\Inc -ID:\development\st\stm32\src_code\ahg081\fortuna\MDK-ARM\RTE -IC:\Keil_v5
-\ARM\PACK\ARM\CMSIS\5.2.0\CMSIS\Include -IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DF
-P\2.2.0\Device\Include --predefine="__MICROLIB SETA 1" --predefine="__UVISION_V
+\Inc -ID:\development\embed\st\src\ahg081\fortuna\MDK-ARM\RTE -IC:\Keil_v5\ARM\
+PACK\ARM\CMSIS\5.2.0\CMSIS\Include -IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.2
+.0\Device\Include --predefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSIO
 
 
 
 ARM Macro Assembler    Page 10 
 
 
-ERSION SETA 520" --predefine="_RTE_ SETA 1" --predefine="STM32F10X_HD SETA 1" -
--list=startup_stm32f103xe.lst startup_stm32f103xe.s
+N SETA 520" --predefine="_RTE_ SETA 1" --predefine="STM32F10X_HD SETA 1" --list
+=startup_stm32f103xe.lst startup_stm32f103xe.s
 
 
 

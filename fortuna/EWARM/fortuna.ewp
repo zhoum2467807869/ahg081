@@ -1120,6 +1120,9 @@
                     <name>$PROJ_DIR$\..\Src\tasks\lock_ctrl_task.c</name>
                 </file>
                 <file>
+                    <name>$PROJ_DIR$\..\Src\tasks\lock_door_cache_task.c</name>
+                </file>
+                <file>
                     <name>$PROJ_DIR$\..\Src\tasks\lock_status_task.c</name>
                 </file>
                 <file>
